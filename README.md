@@ -16,7 +16,7 @@ Replicate AWS Lambda
     - This simulates a new memo being created.
 
 ### Handlers
-This is a user designed lambda function. For now, there is one handler for each standardized event.
+This is a user designed lambda function. For now, there is one handler for each standardized event. For simplicity, handlers are hard-coded rather than passed to the Dispatcher via HTTP requests. 
 > For example, when an image is updated, the image must be processed and update data in a database.
 ```
 <user_defined_prefix>_handler(event):
