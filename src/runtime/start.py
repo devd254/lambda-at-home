@@ -1,6 +1,13 @@
-# Select execution environment (if warm one exists that is sitting idle, use that one. cold start)
-# cold starts will simply choose first non-active environment (runner)
-# cold starts add an extra 10 seconds simulated time (with time.sleep)
-# return the selected runner after it's been started up
-def start():
-    pass
+import asyncio
+import time
+from python_on_whales import DockerClient
+
+from infra import runner
+
+from typing import Union
+
+async def start_runner(runner_id: int) -> Union[DockerClient, None]:
+    print(f"Cold starting runner {runner_id}")
+    # Simulate cold start delay
+    await asyncio.sleep(10)
+    return runner.create_runner(runner_id)

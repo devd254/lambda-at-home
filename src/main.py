@@ -1,9 +1,38 @@
-# Fast API server that will be ran with uvicorn
+from fastapi import FastAPI
+from src.dispatcher.registry import EVENT_REGISTRY
+from src.dispatcher.scheduler import scheduler
+from infra.runner import stop_all_runners
+from src.events.image_update import ImageUpdateEvent
+from src.events.memo_update import MemoUpdateEvent
+import aiofiles
 
-# endpoint1: dispatch
-#   requests will be in the Pydantic format stored in /src/events
-#   Check the registry to see which handler maps to which event
-#   schedule found handler
+def lifespan():
+    # Startup
+    yield
+    # Teardown
+    stop_all_runners()
 
-# endpoint2: logs
-#   get request with no params, return all logs stored in logs.txt as json
+app = FastAPI(lifespan=lifespan)
+
+
+
+@app.post("/dispatch/image")
+async def dispatch_image(event: ImageUpdateEvent):
+    handler = EVENT_REGISTRY[type(event)]
+    await scheduler.schedule_event(handler, event)
+    return {"message": "Image event scheduled for execution"}
+
+@app.post("/dispatch/memo")
+async def dispatch_memo(event: MemoUpdateEvent):
+    handler = EVENT_REGISTRY[type(event)]
+    await scheduler.schedule_event(handler, event)
+    return {"message": "Memo event scheduled for execution"}
+
+@app.get("/logs")
+async def get_logs():
+    try:
+        async with aiofiles.open("logs.txt", "r") as f:
+            logs = await f.readlines()
+        return [log.strip() for log in logs]
+    except FileNotFoundError:
+        return []

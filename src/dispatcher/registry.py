@@ -1,3 +1,9 @@
-# Dictionary of events types mapped to handlers 
+from handlers.image import image_handler
+from handlers.memo import memo_handler
+from src.events.image_update import ImageUpdateEvent
+from src.events.memo_update import MemoUpdateEvent
 
-# For now, events hard coded mapping. In practice, this registry is maintained by the user
+EVENT_REGISTRY = {
+    ImageUpdateEvent: image_handler,
+    MemoUpdateEvent: memo_handler,
+}
