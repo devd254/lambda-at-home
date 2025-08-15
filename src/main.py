@@ -1,15 +1,18 @@
+import aiofiles
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
+
 from src.dispatcher.registry import EVENT_REGISTRY
 from src.dispatcher.scheduler import scheduler
 from infra.runner import stop_all_runners
 from src.events.image_update import ImageUpdateEvent
 from src.events.memo_update import MemoUpdateEvent
-import aiofiles
 
-def lifespan():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     # Startup
     yield
-    # Teardown
+    # Shutdown
     stop_all_runners()
 
 app = FastAPI(lifespan=lifespan)

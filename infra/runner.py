@@ -22,5 +22,9 @@ def stop_runner(runner: DockerClient):
     runner.stop()
 
 def stop_all_runners():
-    for container in get_all_runners():
+    runners = get_all_runners()
+    if not runners:
+        print("No active runners to stop.")
+        return
+    for container in runners:
         container.stop()
