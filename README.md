@@ -1,9 +1,9 @@
 # lambda-at-home
 "We Have Lambda at Home". I'm gonna recreate a simple mini "AWS Lambda" locally to figure it out. I wanted to balance learning with practicing using AI tooling. For this project, I wanted to write all code using Gemini CLI. I did this by:
-    1. Using ChatGPT as a guide to help me learn and design the project.
-    2. Creating the necessary directories and files
-    3. Left comments on each file that were specific enough, but left some ambiguity to see limitations on Gemini CLI
-    4. Let Gemini CLI get to work, debugging as necessary (ideally through prompts)
+   1. Using ChatGPT as a guide to help me learn and design the project.
+   2. Creating the necessary directories and files
+   3. Left comments on each file that were specific enough, but left some ambiguity to see limitations on Gemini CLI
+   4. Let Gemini CLI get to work, debugging as necessary (ideally through prompts)
 
 ## About
 Replicate AWS Lambda
