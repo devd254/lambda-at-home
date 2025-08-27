@@ -9,4 +9,4 @@ if project_root not in sys.path:
 
 if __name__ == "__main__":
     # Run the FastAPI app using uvicorn, pointing to the app instance in src/main.py
-    uvicorn.run("src.main:app", host="localhost", port=8000, reload=True)
+    uvicorn.run("src.main:app", host="localhost", port=8000)

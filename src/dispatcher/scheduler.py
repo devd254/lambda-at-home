@@ -17,7 +17,7 @@ class Scheduler:
         self.next_runner_id = 0
 
     async def schedule_event(self, handler: Callable, event: Any):
-        await self.request_queue.append((handler, event))
+        self.request_queue.append((handler, event))
         asyncio.create_task(self._process_queue())
 
     async def _process_queue(self):
@@ -30,7 +30,7 @@ class Scheduler:
         if selected_runner:
             await self._execute_handler_in_runner(selected_runner, handler, event)
         else:
-            await self.request_queue.appendleft((handler, event))
+            self.request_queue.appendleft((handler, event))
 
     async def _find_available_runner(self) -> Union[DockerClient, None]:
         if self.idle_runners:
